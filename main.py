@@ -1,7 +1,8 @@
 import pygame
 
 from games.board import Board
-from games.constants import HEIGHT, WINDOW_WIDTH
+from games.constants import HEIGHT, RED, SQUARE_SIZE, WHITE, WINDOW_WIDTH
+from games.game import Game
 
 
 FPS = 60
@@ -13,13 +14,17 @@ WIN = pygame.display.set_mode((WINDOW_WIDTH, HEIGHT))
 FONT = pygame.font.SysFont(None, 30)
 
 
+def get_row_col_from_mouse(pos: tuple[int, int]):
+    x, y = pos
+    row = y // SQUARE_SIZE
+    col = x // SQUARE_SIZE
+    return row, col
+
+
 def main() -> None:
     run = True
     clock = pygame.time.Clock()
-    board = Board()
-
-    piece = board.get_piece(0, 1)
-    board.move(piece, 4, 3)
+    game = Game(WIN, FONT)
 
     while run:
         clock.tick(FPS)
@@ -29,10 +34,11 @@ def main() -> None:
                 run = False
 
             if event.type == pygame.MOUSEBUTTONDOWN:
-                pass
+                pos = pygame.mouse.get_pos()
+                row, col = get_row_col_from_mouse(pos)
+                game.select(row, col)
 
-        board.draw(WIN, FONT)
-        pygame.display.update()
+        game.update()
     pygame.quit()
 
 
