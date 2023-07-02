@@ -1,8 +1,8 @@
 import pygame
 
-from games.board import Board
-from games.constants import HEIGHT, RED, SQUARE_SIZE, WHITE, WINDOW_WIDTH
+from games.constants import HEIGHT, SQUARE_SIZE, WINDOW_WIDTH
 from games.game import Game
+from games.utils import xy_to_grid
 
 
 FPS = 60
@@ -12,13 +12,6 @@ pygame.font.init()
 
 WIN = pygame.display.set_mode((WINDOW_WIDTH, HEIGHT))
 FONT = pygame.font.SysFont(None, 30)
-
-
-def get_row_col_from_mouse(pos: tuple[int, int]):
-    x, y = pos
-    row = y // SQUARE_SIZE
-    col = x // SQUARE_SIZE
-    return row, col
 
 
 def main() -> None:
@@ -35,8 +28,7 @@ def main() -> None:
 
             if event.type == pygame.MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
-                row, col = get_row_col_from_mouse(pos)
-                game.select(row, col)
+                game.select(xy_to_grid(pos))
 
         game.update()
     pygame.quit()

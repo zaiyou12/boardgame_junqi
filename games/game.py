@@ -10,7 +10,7 @@ from games.constants import (
     SQUARE_SIZE,
     WHITE,
 )
-from games.utils import calc_pos
+from games.utils import grid_to_pos
 
 
 class Game:
@@ -25,51 +25,51 @@ class Game:
         self.draw_valid_moves(self.valid_moves)
         pygame.display.update()
 
-    def _init(self):
-        self.selected = None
-        self.board = Board()
-        self.turn = RED
-        self.valid_moves = set()
-
-    def reset(self):
+    def reset(self) -> None:
         self._init()
 
-    def select(self, row, col):
+    def _init(self) -> None:
+        self.board = Board()
+        self.turn = RED
+        self.selected = None
+        self.valid_moves = set()
+
+    def select(self, grid: tuple[int, int]) -> bool:
         if self.selected:
-            result = self._move(row, col)
+            result = self._move(grid)
             if not result:
                 self.selected = None
                 self.valid_moves.clear()
-                self.select(row, col)
+                self.select(grid)
             return True
         else:
-            piece = self.board.get_piece(row, col)
+            piece = self.board.get_piece(grid)
             if piece != 0 and piece.color == self.turn:
                 self.selected = piece
                 self.valid_moves = self.board.get_valid_moves(piece)
                 return True
         return False
 
-    def _move(self, row, col):
-        if self.selected and (row, col) in self.valid_moves:
-            self.board.move(self.selected, row, col)
+    def _move(self, grid: tuple[int, int]) -> bool:
+        if self.selected and grid in self.valid_moves:
+            self.board.move(self.selected, grid)
             self.change_turn()
         else:
             return False
         return True
 
     def draw_cur_game_info(self, win: pygame.surface, font: pygame.font.Font):
-        cur_player = 'RED' if self.turn == RED else 'WHITE'
-        cur_player_text = font.render(f'Turn: {cur_player}', True, GREY)
+        cur_player = "RED" if self.turn == RED else "WHITE"
+        cur_player_text = font.render(f"Turn: {cur_player}", True, GREY)
         win.blit(cur_player_text, (COLS * SQUARE_SIZE + 5, 5))
 
     def draw_valid_moves(self, moves):
         for move in moves:
-            row, col = move
+            grid = move
             pygame.draw.circle(
                 self.win,
                 BLUE,
-                calc_pos(row, col),
+                grid_to_pos(grid),
                 AVAILABLE_MOVE_TOKEN_RADIUS,
             )
 

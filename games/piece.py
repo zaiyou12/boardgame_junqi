@@ -1,42 +1,38 @@
 from typing import Literal
 import pygame
 
-from games.utils import calc_pos
-from .constants import GREY, RED, SQUARE_SIZE
+from games.utils import grid_to_pos
+from .constants import GREY, PIECE_OUTLINE, PIECE_PADDING, SQUARE_SIZE
 
 
 class Piece:
-    PADDING = 15
-    OUTLINE = 2
-
     def __init__(
-        self, row: int, col: int, color: tuple[Literal[255], Literal[255], Literal[255]]
+        self,
+        grid: tuple[int, int],
+        color: tuple[Literal[255], Literal[255], Literal[255]],
+        value: int = 0,
     ) -> None:
-        self.row = row
-        self.col = col
+        self.grid = grid
+        self.value = value
         self.color = color
 
-        self.x = 0
-        self.y = 0
-        self.calc_pos()
-
-    def calc_pos(self) -> None:
-        self.x, self.y = calc_pos(self.row, self.col)
-
     def draw(self, win: pygame.Surface, font: pygame.font.Font) -> None:
-        radius = SQUARE_SIZE // 2 - self.PADDING
-        pygame.draw.circle(win, GREY, (self.x, self.y), radius + self.OUTLINE)
-        pygame.draw.circle(win, self.color, (self.x, self.y), radius)
-        # if self.king:
-        #     text = font.render("K", True, GREY)
-        #     win.blit(
-        #         text, (self.x - text.get_width() // 2, self.y - text.get_height() // 2)
-        #     )
+        radius = SQUARE_SIZE // 2 - PIECE_PADDING
+        pygame.draw.circle(win, GREY, self.xy, radius + PIECE_OUTLINE)
+        pygame.draw.circle(win, self.color, self.xy, radius)
 
-    def move(self, row: int, col: int) -> None:
-        self.row = row
-        self.col = col
-        self.calc_pos()
+        text = font.render(str(self.value), True, GREY)
+        win.blit(
+            text,
+            (self.xy[0] - text.get_width() // 2, self.xy[1] - text.get_height() // 2),
+        )
+
+    def move(self, grid: tuple[int, int]) -> None:
+        self.grid = grid
+
+    @property
+    def xy(self):
+        return grid_to_pos(self.grid)
 
     def __repr__(self) -> str:
         return "Piece " + str(self.color)
