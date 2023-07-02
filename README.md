@@ -1,35 +1,39 @@
-# Jun Qi
+# Simple Jun Qi - board game
 
-## 참고 게임
+![Game play](./gameplay.png)
 
-쥔치
+## Reference game
 
-- 36개의 말
-- 움직임이 철도와 일반 길로 구분 됨, 철도는 막힘이 없으면 쭉 갈수 있음
-- 싸우면 계급이 높은 쪽이 이기고, 비기면 둘 다 죽음
-- 단, 지뢰와 폭탄병은 상대병 계급과 상관 없이 둘다 죽음
-- 군 깃발을 찾으면 이김 군 깃발은 지정된 2곳에 놓을 수 있고, 한개의 지뢰와 한개의 군 깃발을 그곳에 배치
+[Luzhanqi](https://en.wikipedia.org/wiki/Luzhanqi)
 
-## 룰 셋팅
+- 36 pieces
+- Movement is divided into railroad and normal road, railroad can go straight if there is no blockage
+- The higher ranked piece wins over small ranked piece. If both have same rank, both die.
+- However, mines and bombers are killed regardless of the rank of the opponent.
+- If you find a military flag, you win the game.
+- The military flag can be placed one of two spots at the beginning.
 
-우리의 기본 룰
+## Rule Setting
 
-- 9개의 말, 9개의 번호, 직업이 구분됨
-- 싸우면 번호가 큰 쪽이 이김, 단 1이 9을 이김
-- 맵에 따라 지형도 다르며, 움직임이 지형으로 구분 됨, 직업에 따라 지형의 활용도가 달라짐
-- 목표는 2개 지점이 있으며, 한 곳은 군 깃발, 다른 한 곳은 지뢰
-- 선보다는 칸이 좋다
+### Our basic rules
 
-우리의 변형 룰
+- 9 pieces, 9 numbers
+- Catch opponent's 2 to win
+- 2 cannot move
+- Big number wins small number
+- But 1 wins over biggest number
+- If the numbers are equal, the attacker wins
 
-- 번호의 갯수: 9~12, 목표 갯수: 2~4
-- 맵의 지형, 크기, 모양
-- 플레이 인원수: 1~4
+### Our variant rules
 
-배경
+- Number of numbers: 9-12, number of objectives: 2-4
+- Terrain, size, and shape of the map
+- Number of players: 1 to 4
 
-- 판타지: 인간 vs 인간
+### Setting
 
-플랫폼
+- Fantasy: Human vs Human
 
-- 우선 PC, 추후 세로 모바일
+### Platforms
+
+- PC first, portrait mobile later
